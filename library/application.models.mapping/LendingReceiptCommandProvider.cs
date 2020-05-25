@@ -7,8 +7,6 @@ using System.Linq;
 namespace library.application.models.mapping {
 
     class LendingReceiptCommandProvider: CommandProvider {
-        
-        private BaseDAO dao;
 
         public Object generatePrimaryKey(Model model, DataTable table, SqlConnection connection) {
             SqlCommand queryCommand = new SqlCommand($"SELECT MAX(id) FROM {table.TableName}", connection);
@@ -68,10 +66,8 @@ namespace library.application.models.mapping {
                 return receipt;
             }
 
-            if (dao == null) {
-                dao = Program.dao;
-            }
-            
+            BaseDAO dao = Program.dao;
+
             receipt.id = row.Field<int>("id");
             receipt.createdDate = row.Field<DateTime>("created_date");
             receipt.returnDate = row.Field<DateTime>("return_date");

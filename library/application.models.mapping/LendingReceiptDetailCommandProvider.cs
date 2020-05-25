@@ -8,8 +8,6 @@ namespace library.application.models.mapping {
 
     class LendingReceiptDetailCommandProvider: CommandProvider {
 
-        private BaseDAO dao;
-
         public Object generatePrimaryKey(Model model, DataTable table, SqlConnection connection) {
             
             return model.getId();
@@ -56,9 +54,7 @@ namespace library.application.models.mapping {
                 return detail;
             }
 
-            if (dao == null) {
-                dao = Program.dao;
-            }
+            BaseDAO dao = Program.dao;
 
             detail.id = new LendingReceiptDetailId(dao.getList<Book>(typeof(Book))
                 .Where(book => book.id == row.Field<int>("book_id"))

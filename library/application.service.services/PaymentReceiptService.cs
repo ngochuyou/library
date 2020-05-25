@@ -1,8 +1,9 @@
 ﻿using library.application.daos;
 using library.application.models;
+using System.Transactions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Data.SqlClient;
+using library.application.models.mapping;
 
 namespace library.application.service.services {
 
@@ -80,36 +81,40 @@ namespace library.application.service.services {
         }
 
         public DatabaseOperationResult insert(PaymentReceipt receipt) {
-            DatabaseOperationResult result = new DatabaseOperationResult();
-            DatabaseOperationResult lendingReceiptInsertionResult = dao.insert(receipt.lendingReceipt, typeof(LendingReceipt));
+            using (TransactionScope transactionScope = new TransactionScope()) {
+                DatabaseOperationResult result = new DatabaseOperationResult();
+                DatabaseOperationResult lendingReceiptInsertionResult = dao.insert(receipt.lendingReceipt, typeof(LendingReceipt));
 
-            if (!lendingReceiptInsertionResult.isOk()) {
-                result.status = ServiceStatus.INVALID;
-                result.message = "Operation failed when trying to insert Lending Receipt";
-                return result;
-            }
-
-            DatabaseOperationResult paymentReceiptInsertionResult = dao.insert(receipt, typeof(PaymentReceipt));
-
-            if (!paymentReceiptInsertionResult.isOk()) {
-                result.status = ServiceStatus.INVALID;
-                result.message = "Operation failed when trying to insert Payment Receipt";
-                return result;
-            }
-
-            DatabaseOperationResult lendingDetailsInsertionResult;
-
-            foreach (LendingReceiptDetail detail in receipt.lendingReceipt.details) {
-                lendingDetailsInsertionResult = dao.insert(detail, typeof(LendingReceiptDetail));
-
-                if (!lendingDetailsInsertionResult.isOk()) {
+                if (!lendingReceiptInsertionResult.isOk()) {
                     result.status = ServiceStatus.INVALID;
-                    result.message = "Operation failed when trying to insert Lending details";
+                    result.message = "Operation failed when trying to insert Lending Receipt";
                     return result;
                 }
-            }
 
-            return result;
+                DatabaseOperationResult paymentReceiptInsertionResult = dao.insert(receipt, typeof(PaymentReceipt));
+
+                if (!paymentReceiptInsertionResult.isOk()) {
+                    result.status = ServiceStatus.INVALID;
+                    result.message = "Operation failed when trying to insert Payment Receipt";
+                    return result;
+                }
+
+                DatabaseOperationResult lendingDetailsInsertionResult;
+
+                foreach (LendingReceiptDetail detail in receipt.lendingReceipt.details) {
+                    lendingDetailsInsertionResult = dao.insert(detail, typeof(LendingReceiptDetail));
+
+                    if (!lendingDetailsInsertionResult.isOk()) {
+                        result.status = ServiceStatus.INVALID;
+                        result.message = "Operation failed when trying to insert Lending details";
+                        return result;
+                    }
+                }
+
+                transactionScope.Complete();
+
+                return result;
+            }
         }
     }
 }

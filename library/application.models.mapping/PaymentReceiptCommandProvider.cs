@@ -8,8 +8,6 @@ namespace library.application.models.mapping {
 
     class PaymentReceiptCommandProvider: CommandProvider {
 
-        private BaseDAO dao;
-
         public Object generatePrimaryKey(Model model, DataTable table, SqlConnection connection) {
             SqlCommand queryCommand = new SqlCommand($"SELECT MAX(id) FROM {table.TableName}", connection);
 
@@ -69,10 +67,8 @@ namespace library.application.models.mapping {
             if (row == null) {
                 return receipt;
             }
-            
-            if (dao == null) {
-                dao = Program.dao;
-            }
+
+            BaseDAO dao = Program.dao;
 
             receipt.id = row.Field<int>("id");
             receipt.debtAmount = row.Field<Double>("debt_amount");

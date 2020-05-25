@@ -72,6 +72,24 @@ namespace library.application.daos {
                     .OfType<T>().ToList();
         }
 
+        public List<T> getlist<T>(Type clazz, int page, int amount) {
+            CommandProvider commandProvider;
+
+            try {
+                commandProvider = commandProviders[clazz];
+            } catch (Exception e) {
+                Console.WriteLine("BaseDAO" + e.Message);
+                return new List<T>();
+            }
+
+            return database.Tables[modelMap[clazz]]
+                    .AsEnumerable()
+                    .Skip((page - 1) * amount).Take(amount)
+                    .Select(row => commandProvider.mapModel(row))
+                    .Where(model => model.isActive == true)
+                    .OfType<T>().ToList();
+        }
+
         public DatabaseOperationResult insert(Model entity, Type clazz) {
             CommandProvider commandProvider;
 
@@ -131,6 +149,7 @@ namespace library.application.daos {
 
             return new DatabaseOperationResult(ServiceStatus.OK, "OK");
         }
+
         public DatabaseOperationResult update(Model entity, Type clazz) {
             CommandProvider commandProvider;
 
@@ -163,6 +182,11 @@ namespace library.application.daos {
             return new DatabaseOperationResult(ServiceStatus.OK, "OK");
         }
 
+        public DataTable getTable(Type clazz) {
+
+            return database.Tables[this.modelMap[clazz]];
+        }
+
         public String getTableName(Type clazz) {
 
             return this.modelMap[clazz];
@@ -171,6 +195,11 @@ namespace library.application.daos {
         public SqlConnection getConnection() {
 
             return this.connection;
+        }
+
+        public CommandProvider GetCommandProvider(Type clazz) {
+
+            return commandProviders[clazz];
         }
     }
 }

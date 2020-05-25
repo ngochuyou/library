@@ -4,6 +4,7 @@ using System.Linq;
 using library.application.models;
 using library.application.daos;
 using library.application.service.services;
+using System.ComponentModel;
 
 namespace library.application.forms {
     public partial class EmployeeForm: Form {
@@ -77,7 +78,7 @@ namespace library.application.forms {
             this.employeesSet.Columns.Add(phoneColumn);
             this.employeesSet.Columns.Add(titleColumn);
             this.employeesSet.Columns[2].DefaultCellStyle.Format = "yyyy-MM-dd";
-
+            
             this.renderEmployeeSet();
         }
 
@@ -87,10 +88,15 @@ namespace library.application.forms {
             this.employeeModelTitleComboBox.ValueMember = "id";
             this.employeeModelTitleComboBox.DataSource = dao.getList<Title>(typeof(Title));
         }
+
         private void renderEmployeeSet() {
-            this.employeesSet.DataSource = dao.getList<Employee>(typeof(Employee))
-                    .Select(emp => new { emp.id, emp.fullname, emp.dob, emp.address, emp.phone, titleName = emp.title.name })
-                    .ToList();
+            BindingList<EmployeeModel> list = new BindingList<EmployeeModel>();
+
+            foreach (Employee employee in dao.getList<Employee>(typeof(Employee))) {
+                list.Add(new EmployeeModel(employee.id, employee.fullname, employee.dob, employee.address, employee.phone, employee.title.name));
+            }
+
+            this.employeesSet.DataSource = list;
         }
 
         private void renderModel() {
@@ -141,9 +147,6 @@ namespace library.application.forms {
                 .initialize(this.employeeModel).model, typeof(Employee));
 
             if (dbResult.isOk()) {
-                this.employeesSet.DataSource = dao.getList<Employee>(typeof(Employee))
-                    .Select(emp => new { emp.id, emp.fullname, emp.dob, emp.address, emp.phone, titleName = emp.title.name })
-                    .ToList();
                 this.employeeModel = new Employee();
                 this.renderModel();
             }
@@ -163,9 +166,7 @@ namespace library.application.forms {
             DatabaseOperationResult dbResult = dao.delete(this.employeeModel, typeof(Employee));
 
             if (dbResult.isOk()) {
-                this.employeesSet.DataSource = dao.getList<Employee>(typeof(Employee))
-                    .Select(emp => new { emp.id, emp.fullname, emp.dob, emp.address, emp.phone, titleName = emp.title.name })
-                    .ToList();
+                this.renderEmployeeSet();
                 this.employeeModel = new Employee();
                 this.renderModel();
             }
@@ -189,12 +190,33 @@ namespace library.application.forms {
             DatabaseOperationResult dbResult = dao.update(this.employeeModel, typeof(Employee));
 
             if (dbResult.isOk()) {
-                this.employeesSet.DataSource = dao.getList<Employee>(typeof(Employee))
-                    .Select(emp => new { emp.id, emp.fullname, emp.dob, emp.address, emp.phone, titleName = emp.title.name })
-                    .ToList();
+                this.renderEmployeeSet();
                 this.employeeModel = new Employee();
                 this.renderModel();
             }
+        }
+    }
+
+    class EmployeeModel {
+        public int id { get; set; }
+        
+        public String fullname { get; set; }        
+        
+        public DateTime dob { get; set; }
+
+        public String address { get; set; }
+
+        public String phone { get; set; }
+
+        public String titleName { get; set; }
+
+        public EmployeeModel(int id, String fullname, DateTime dob, String address, String phone, String titleName) {
+            this.id = id;
+            this.fullname = fullname;
+            this.dob = dob;
+            this.address = address;
+            this.phone = phone;
+            this.titleName = titleName;
         }
     }
 }
