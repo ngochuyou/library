@@ -26,21 +26,21 @@
             this.label2 = new System.Windows.Forms.Label();
             this.landingFormLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.employeeModelFullnameInput = new System.Windows.Forms.TextBox();
-            this.employeeModelAddressInput = new System.Windows.Forms.TextBox();
-            this.employeeModelPhoneInput = new System.Windows.Forms.TextBox();
-            this.employeeModelDobInput = new System.Windows.Forms.DateTimePicker();
             this.employeeModelTitleComboBox = new System.Windows.Forms.ComboBox();
+            this.employeeModelDobInput = new System.Windows.Forms.DateTimePicker();
+            this.employeeModelPhoneInput = new System.Windows.Forms.TextBox();
+            this.employeeModelAddressInput = new System.Windows.Forms.TextBox();
+            this.employeeModelFullnameInput = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.returnToDashboardButton = new System.Windows.Forms.Button();
-            this.employeeModelEditButton = new System.Windows.Forms.Button();
-            this.employeeModelRemoveButton = new System.Windows.Forms.Button();
             this.employeeModelAddButton = new System.Windows.Forms.Button();
+            this.employeeModelRemoveButton = new System.Windows.Forms.Button();
+            this.employeeModelEditButton = new System.Windows.Forms.Button();
+            this.returnToDashboardButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.employeesSet = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -95,41 +95,47 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Detail Informations";
             // 
-            // label1
+            // employeeModelTitleComboBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Fullname";
+            this.employeeModelTitleComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.employeeModelTitleComboBox.FormattingEnabled = true;
+            this.employeeModelTitleComboBox.Location = new System.Drawing.Point(421, 55);
+            this.employeeModelTitleComboBox.Name = "employeeModelTitleComboBox";
+            this.employeeModelTitleComboBox.Size = new System.Drawing.Size(263, 23);
+            this.employeeModelTitleComboBox.TabIndex = 1;
+            this.employeeModelTitleComboBox.SelectedIndexChanged += new System.EventHandler(this.employeeModelTitleComboBox_SelectedIndexChanged);
             // 
-            // label3
+            // employeeModelDobInput
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 60);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 15);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "DOB";
+            this.employeeModelDobInput.Location = new System.Drawing.Point(75, 57);
+            this.employeeModelDobInput.Name = "employeeModelDobInput";
+            this.employeeModelDobInput.Size = new System.Drawing.Size(263, 21);
+            this.employeeModelDobInput.TabIndex = 1;
+            this.employeeModelDobInput.ValueChanged += new System.EventHandler(this.employeeModelDobInput_ValueChanged);
             // 
-            // label4
+            // employeeModelPhoneInput
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 92);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(51, 15);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Address";
+            this.employeeModelPhoneInput.Location = new System.Drawing.Point(421, 25);
+            this.employeeModelPhoneInput.Name = "employeeModelPhoneInput";
+            this.employeeModelPhoneInput.Size = new System.Drawing.Size(263, 21);
+            this.employeeModelPhoneInput.TabIndex = 6;
+            this.employeeModelPhoneInput.TextChanged += new System.EventHandler(this.employeeModelPhoneInput_TextChanged);
             // 
-            // label5
+            // employeeModelAddressInput
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(372, 28);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 15);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Phone";
+            this.employeeModelAddressInput.Location = new System.Drawing.Point(75, 89);
+            this.employeeModelAddressInput.Name = "employeeModelAddressInput";
+            this.employeeModelAddressInput.Size = new System.Drawing.Size(263, 21);
+            this.employeeModelAddressInput.TabIndex = 5;
+            this.employeeModelAddressInput.TextChanged += new System.EventHandler(this.employeeModelAddressInput_TextChanged);
+            // 
+            // employeeModelFullnameInput
+            // 
+            this.employeeModelFullnameInput.Location = new System.Drawing.Point(75, 25);
+            this.employeeModelFullnameInput.Name = "employeeModelFullnameInput";
+            this.employeeModelFullnameInput.Size = new System.Drawing.Size(263, 21);
+            this.employeeModelFullnameInput.TabIndex = 4;
+            this.employeeModelFullnameInput.TextChanged += new System.EventHandler(this.employeeModelFullnameInput_TextChanged);
             // 
             // label6
             // 
@@ -140,47 +146,41 @@
             this.label6.TabIndex = 3;
             this.label6.Text = "Title";
             // 
-            // employeeModelFullnameInput
+            // label5
             // 
-            this.employeeModelFullnameInput.Location = new System.Drawing.Point(75, 25);
-            this.employeeModelFullnameInput.Name = "employeeModelFullnameInput";
-            this.employeeModelFullnameInput.Size = new System.Drawing.Size(263, 21);
-            this.employeeModelFullnameInput.TabIndex = 4;
-            this.employeeModelFullnameInput.TextChanged += new System.EventHandler(this.employeeModelFullnameInput_TextChanged);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(372, 28);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 15);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Phone";
             // 
-            // employeeModelAddressInput
+            // label4
             // 
-            this.employeeModelAddressInput.Location = new System.Drawing.Point(75, 89);
-            this.employeeModelAddressInput.Name = "employeeModelAddressInput";
-            this.employeeModelAddressInput.Size = new System.Drawing.Size(263, 21);
-            this.employeeModelAddressInput.TabIndex = 5;
-            this.employeeModelAddressInput.TextChanged += new System.EventHandler(this.employeeModelAddressInput_TextChanged);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 92);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(51, 15);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Address";
             // 
-            // employeeModelPhoneInput
+            // label3
             // 
-            this.employeeModelPhoneInput.Location = new System.Drawing.Point(421, 25);
-            this.employeeModelPhoneInput.Name = "employeeModelPhoneInput";
-            this.employeeModelPhoneInput.Size = new System.Drawing.Size(263, 21);
-            this.employeeModelPhoneInput.TabIndex = 6;
-            this.employeeModelPhoneInput.TextChanged += new System.EventHandler(this.employeeModelPhoneInput_TextChanged);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "DOB";
             // 
-            // employeeModelDobInput
+            // label1
             // 
-            this.employeeModelDobInput.Location = new System.Drawing.Point(75, 57);
-            this.employeeModelDobInput.Name = "employeeModelDobInput";
-            this.employeeModelDobInput.Size = new System.Drawing.Size(263, 21);
-            this.employeeModelDobInput.TabIndex = 1;
-            this.employeeModelDobInput.ValueChanged += new System.EventHandler(this.employeeModelDobInput_ValueChanged);
-            // 
-            // employeeModelTitleComboBox
-            // 
-            this.employeeModelTitleComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.employeeModelTitleComboBox.FormattingEnabled = true;
-            this.employeeModelTitleComboBox.Location = new System.Drawing.Point(421, 55);
-            this.employeeModelTitleComboBox.Name = "employeeModelTitleComboBox";
-            this.employeeModelTitleComboBox.Size = new System.Drawing.Size(263, 23);
-            this.employeeModelTitleComboBox.TabIndex = 1;
-            this.employeeModelTitleComboBox.SelectedIndexChanged += new System.EventHandler(this.employeeModelTitleComboBox_SelectedIndexChanged);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Fullname";
             // 
             // panel2
             // 
@@ -193,37 +193,21 @@
             this.panel2.Size = new System.Drawing.Size(689, 71);
             this.panel2.TabIndex = 1;
             // 
-            // returnToDashboardButton
+            // employeeModelAddButton
             // 
-            this.returnToDashboardButton.BackColor = System.Drawing.Color.White;
-            this.returnToDashboardButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.returnToDashboardButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.returnToDashboardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.returnToDashboardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.returnToDashboardButton.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.returnToDashboardButton.Location = new System.Drawing.Point(588, 15);
-            this.returnToDashboardButton.Name = "returnToDashboardButton";
-            this.returnToDashboardButton.Size = new System.Drawing.Size(96, 43);
-            this.returnToDashboardButton.TabIndex = 1;
-            this.returnToDashboardButton.Text = "Quit";
-            this.returnToDashboardButton.UseVisualStyleBackColor = false;
-            this.returnToDashboardButton.Click += new System.EventHandler(this.returnToDashboardButton_Click);
-            // 
-            // employeeModelEditButton
-            // 
-            this.employeeModelEditButton.BackColor = System.Drawing.Color.White;
-            this.employeeModelEditButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.employeeModelEditButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.employeeModelEditButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.employeeModelEditButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.employeeModelEditButton.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.employeeModelEditButton.Location = new System.Drawing.Point(486, 15);
-            this.employeeModelEditButton.Name = "employeeModelEditButton";
-            this.employeeModelEditButton.Size = new System.Drawing.Size(96, 43);
-            this.employeeModelEditButton.TabIndex = 3;
-            this.employeeModelEditButton.Text = "Edit";
-            this.employeeModelEditButton.UseVisualStyleBackColor = false;
-            this.employeeModelEditButton.Click += new System.EventHandler(this.employeeModelEditButton_Click);
+            this.employeeModelAddButton.BackColor = System.Drawing.Color.White;
+            this.employeeModelAddButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.employeeModelAddButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.employeeModelAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.employeeModelAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.employeeModelAddButton.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.employeeModelAddButton.Location = new System.Drawing.Point(282, 15);
+            this.employeeModelAddButton.Name = "employeeModelAddButton";
+            this.employeeModelAddButton.Size = new System.Drawing.Size(96, 43);
+            this.employeeModelAddButton.TabIndex = 5;
+            this.employeeModelAddButton.Text = "Add";
+            this.employeeModelAddButton.UseVisualStyleBackColor = false;
+            this.employeeModelAddButton.Click += new System.EventHandler(this.employeeModelAddButton_Click);
             // 
             // employeeModelRemoveButton
             // 
@@ -241,21 +225,37 @@
             this.employeeModelRemoveButton.UseVisualStyleBackColor = false;
             this.employeeModelRemoveButton.Click += new System.EventHandler(this.employeeModelRemoveButton_Click);
             // 
-            // employeeModelAddButton
+            // employeeModelEditButton
             // 
-            this.employeeModelAddButton.BackColor = System.Drawing.Color.White;
-            this.employeeModelAddButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.employeeModelAddButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.employeeModelAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.employeeModelAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.employeeModelAddButton.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.employeeModelAddButton.Location = new System.Drawing.Point(282, 15);
-            this.employeeModelAddButton.Name = "employeeModelAddButton";
-            this.employeeModelAddButton.Size = new System.Drawing.Size(96, 43);
-            this.employeeModelAddButton.TabIndex = 5;
-            this.employeeModelAddButton.Text = "Add";
-            this.employeeModelAddButton.UseVisualStyleBackColor = false;
-            this.employeeModelAddButton.Click += new System.EventHandler(this.employeeModelAddButton_Click);
+            this.employeeModelEditButton.BackColor = System.Drawing.Color.White;
+            this.employeeModelEditButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.employeeModelEditButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.employeeModelEditButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.employeeModelEditButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.employeeModelEditButton.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.employeeModelEditButton.Location = new System.Drawing.Point(486, 15);
+            this.employeeModelEditButton.Name = "employeeModelEditButton";
+            this.employeeModelEditButton.Size = new System.Drawing.Size(96, 43);
+            this.employeeModelEditButton.TabIndex = 3;
+            this.employeeModelEditButton.Text = "Edit";
+            this.employeeModelEditButton.UseVisualStyleBackColor = false;
+            this.employeeModelEditButton.Click += new System.EventHandler(this.employeeModelEditButton_Click);
+            // 
+            // returnToDashboardButton
+            // 
+            this.returnToDashboardButton.BackColor = System.Drawing.Color.White;
+            this.returnToDashboardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.returnToDashboardButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.returnToDashboardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.returnToDashboardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.returnToDashboardButton.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.returnToDashboardButton.Location = new System.Drawing.Point(588, 15);
+            this.returnToDashboardButton.Name = "returnToDashboardButton";
+            this.returnToDashboardButton.Size = new System.Drawing.Size(96, 43);
+            this.returnToDashboardButton.TabIndex = 1;
+            this.returnToDashboardButton.Text = "Quit";
+            this.returnToDashboardButton.UseVisualStyleBackColor = false;
+            this.returnToDashboardButton.Click += new System.EventHandler(this.returnToDashboardButton_Click);
             // 
             // groupBox2
             // 
@@ -276,6 +276,7 @@
             this.employeesSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.employeesSet.GridColor = System.Drawing.SystemColors.ControlLight;
             this.employeesSet.Location = new System.Drawing.Point(3, 20);
+            this.employeesSet.MultiSelect = false;
             this.employeesSet.Name = "employeesSet";
             this.employeesSet.ReadOnly = true;
             this.employeesSet.Size = new System.Drawing.Size(681, 215);

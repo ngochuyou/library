@@ -210,6 +210,7 @@
             this.customerSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.customerSet.GridColor = System.Drawing.SystemColors.ControlLight;
             this.customerSet.Location = new System.Drawing.Point(3, 20);
+            this.customerSet.MultiSelect = false;
             this.customerSet.Name = "customerSet";
             this.customerSet.ReadOnly = true;
             this.customerSet.Size = new System.Drawing.Size(681, 215);

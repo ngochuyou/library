@@ -55,7 +55,6 @@ namespace library.application.forms {
                 .Where(customer => customer.id == customerId)
                 .FirstOrDefault();
             this.paymentReceipt.lendingReceipt.customer = this.customerModel;
-            Console.WriteLine(this.paymentReceipt.lendingReceipt.customer.fullname);
             this.renderCustomerModel();
         }
 
@@ -144,7 +143,6 @@ namespace library.application.forms {
             this.itemSet.Columns.Add(itemPriceColumn);
             this.itemSet.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.renderItemSet();
-
             this.bookSet.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         }
 
@@ -238,6 +236,7 @@ namespace library.application.forms {
 
         private void submitLendingButton_Click(object sender, EventArgs e) {
             this.paymentReceipt.lendingReceipt.details = this.lendingDetails;
+
             ServiceResult<PaymentReceipt> result = paymentReceiptService.initialize(this.paymentReceipt);
             
             if (!result.isOk()) {
@@ -296,4 +295,5 @@ namespace library.application.forms {
             this.price = price;
         }
     }
+
 }

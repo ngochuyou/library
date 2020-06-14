@@ -72,16 +72,18 @@ namespace library.application.forms {
         }
 
         private void renderCustomerSet() {
+            Console.WriteLine(this.model == null);
+
             if (this.model == null) {
                 this.customerSet.DataSource = dao.getList<Customer>(typeof(Customer))
-                    .Where(customer => customer.expiredDate > DateTime.Now)
+                    .Where(customer => DateTime.Compare(customer.expiredDate, DateTime.Now) > 0)
                     .ToList();
 
-                    return;
+                return;
             }
 
             this.customerSet.DataSource = dao.getList<Customer>(typeof(Customer))
-                .Where(customer => customer.expiredDate > DateTime.Now && (customer.id == this.model.id || customer.fullname.Contains(this.model.fullname)))
+                .Where(customer => (DateTime.Compare(customer.expiredDate, DateTime.Now) > 0) && (customer.id == this.model.id || customer.fullname.Contains(this.model.fullname)))
                 .ToList();
 
             return;

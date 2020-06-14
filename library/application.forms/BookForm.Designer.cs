@@ -231,6 +231,7 @@
             this.bookSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.bookSet.GridColor = System.Drawing.SystemColors.ControlLight;
             this.bookSet.Location = new System.Drawing.Point(3, 20);
+            this.bookSet.MultiSelect = false;
             this.bookSet.Name = "bookSet";
             this.bookSet.ReadOnly = true;
             this.bookSet.Size = new System.Drawing.Size(681, 215);

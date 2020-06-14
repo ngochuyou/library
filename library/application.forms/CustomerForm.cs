@@ -2,6 +2,7 @@
 using library.application.models;
 using library.application.service.services;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -32,8 +33,13 @@ namespace library.application.forms {
         }
 
         private void renderCustomerSet() {
-            this.customerSet.DataSource = dao.getList<Customer>(customerType);
-            
+            BindingList<CustomerModel> list = new BindingList<CustomerModel>();
+
+            foreach (Customer customer in dao.getList<Customer>(typeof(Customer))) {
+                list.Add(new CustomerModel(customer.id, customer.fullname, customer.dob, customer.address, customer.email, customer.expiredDate, customer.debt));
+            }
+
+            this.customerSet.DataSource = list;
         }
 
         private void CustomerForm_Load(object sender, EventArgs e) {
@@ -96,11 +102,13 @@ namespace library.application.forms {
         }
 
         private void customerSet_SelectionChanged(object sender, EventArgs e) {
-            DataGridViewSelectedRowCollection selectedRows = this.customerSet.SelectedRows;
+            if (this.customerSet.SelectedRows.Count > 0) {
+                CustomerModel target = this.customerSet.SelectedRows[0].DataBoundItem as CustomerModel;
+                BindingList<CustomerModel> list = (BindingList<CustomerModel>) this.customerSet.DataSource;
 
-            if (selectedRows.Count > 0) {
-                this.customerModel = dao.getList<Customer>(customerType)
-                    .ElementAt(selectedRows[0].Index);
+                this.customerModel = dao.getList<Customer>(typeof(Customer))
+                    .Where(model => model.id == target.id)
+                    .FirstOrDefault();
                 this.renderModel();
             }
         }
@@ -134,6 +142,10 @@ namespace library.application.forms {
         }
 
         private void customerModelEditButton_Click(object sender, EventArgs e) {
+            if (this.customerSet.SelectedRows.Count == 0) {
+                return; 
+            }
+
             ServiceResult<Customer> result = customerService.validate(this.customerModel);
 
             if (!result.isOk()) {
@@ -151,7 +163,15 @@ namespace library.application.forms {
             DatabaseOperationResult dbResult = dao.update(this.customerModel, customerType);
 
             if (dbResult.isOk()) {
-                this.customerSet.DataSource = dao.getList<Customer>(customerType);
+                DataGridViewRow row = this.customerSet.CurrentRow;
+
+                row.Cells["ID"].Value = this.customerModel.id;
+                row.Cells["Fullname"].Value = this.customerModel.fullname;
+                row.Cells["Birthdate"].Value = this.customerModel.dob;
+                row.Cells["Address"].Value = this.customerModel.address;
+                row.Cells["Email"].Value = this.customerModel.email;
+                row.Cells["Expiry date"].Value = this.customerModel.expiredDate;
+                row.Cells["Debt amount"].Value = this.customerModel.debt;
                 this.customerModel = new Customer();
                 this.renderModel();
             }
@@ -176,21 +196,57 @@ namespace library.application.forms {
                 .initialize(this.customerModel).model, customerType);
 
             if (dbResult.isOk()) {
-                this.customerSet.DataSource = dao.getList<Customer>(customerType);
+                BindingList<CustomerModel> list = (BindingList<CustomerModel>) this.customerSet.DataSource;
+                Customer customer = this.customerModel;
+
+                list.Add(new CustomerModel(customer.id, customer.fullname, customer.dob, customer.address, customer.email, customer.expiredDate, customer.debt));
+                this.customerSet.DataSource = list;
                 this.customerModel = new Customer();
                 this.renderModel();
             }
         }
 
         private void customerModelRemoveButton_Click(object sender, EventArgs e) {
+            if (this.customerSet.SelectedRows.Count == 0) {
+                return; 
+            }
+
             DatabaseOperationResult dbResult = dao.delete(this.customerModel, customerType);
 
             if (dbResult.isOk()) {
-                this.customerSet.DataSource = dao.getList<Customer>(customerType);
+                BindingList<CustomerModel> list = (BindingList<CustomerModel>) this.customerSet.DataSource;
+
+                list.Remove(this.customerSet.CurrentRow.DataBoundItem as CustomerModel);
+                this.customerSet.DataSource = list;
                 this.customerModel = new Customer();
                 this.renderModel();
             }
         }
     }
 
+    class CustomerModel {
+        public int id { get; set; }
+
+        public String fullname { get; set; }
+
+        public DateTime dob { get; set; }
+
+        public String address { get; set; }
+
+        public String email { get; set; }
+
+        public DateTime expiredDate { get; set; }
+
+        public Double debt { get; set; }
+
+        public CustomerModel(int id, String fullname, DateTime dob, String address, String email, DateTime expiredDate, Double debt) {
+            this.id = id;
+            this.fullname = fullname;
+            this.dob = dob;
+            this.address = address;
+            this.email = email;
+            this.expiredDate = expiredDate;
+            this.debt = debt;
+        }
+    }
 } 

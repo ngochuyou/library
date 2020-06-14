@@ -147,6 +147,11 @@ namespace library.application.forms {
                 .initialize(this.employeeModel).model, typeof(Employee));
 
             if (dbResult.isOk()) {
+                Employee employee = this.employeeModel;
+                BindingList<EmployeeModel> newList = (BindingList<EmployeeModel>) this.employeesSet.DataSource;
+
+                newList.Add(new EmployeeModel(employee.id, employee.fullname, employee.dob, employee.address, employee.phone, employee.title.name));
+                this.employeesSet.DataSource = newList;
                 this.employeeModel = new Employee();
                 this.renderModel();
             }
@@ -155,7 +160,7 @@ namespace library.application.forms {
         private void employeesSet_SelectionChanged(object sender, EventArgs e) {
             DataGridViewSelectedRowCollection selectedRows = this.employeesSet.SelectedRows;
 
-            if (selectedRows.Count > 0) {
+            if (this.employeesSet.SelectedRows.Count > 0) {
                 this.employeeModel = dao.getList<Employee>(typeof(Employee))
                     .ElementAt(selectedRows[0].Index);
                 this.renderModel();
@@ -163,16 +168,28 @@ namespace library.application.forms {
         }
 
         private void employeeModelRemoveButton_Click(object sender, EventArgs e) {
+            if (this.employeesSet.SelectedRows.Count == 0) {
+                return; 
+            }
+
+            DataGridViewRow row = this.employeesSet.SelectedRows[0];
+            EmployeeModel model = row.DataBoundItem as EmployeeModel;
+
+            this.employeesSet.Rows.Remove(row);
+
             DatabaseOperationResult dbResult = dao.delete(this.employeeModel, typeof(Employee));
 
             if (dbResult.isOk()) {
-                this.renderEmployeeSet();
                 this.employeeModel = new Employee();
                 this.renderModel();
             }
         }
 
         private void employeeModelEditButton_Click(object sender, EventArgs e) {
+            if (this.employeesSet.SelectedRows.Count == 0) {
+                return; 
+            }
+
             ServiceResult<Employee> result = employeeService.validate(this.employeeModel);
 
             if (!result.isOk()) {
@@ -190,7 +207,15 @@ namespace library.application.forms {
             DatabaseOperationResult dbResult = dao.update(this.employeeModel, typeof(Employee));
 
             if (dbResult.isOk()) {
-                this.renderEmployeeSet();
+                Employee employee = this.employeeModel;
+                DataGridViewRow row = this.employeesSet.CurrentRow;
+
+                row.Cells["ID"].Value = employee.id;
+                row.Cells["Fullname"].Value = employee.fullname;
+                row.Cells["Birthdate"].Value = employee.dob;
+                row.Cells["Address"].Value = employee.address;
+                row.Cells["Phone"].Value = employee.phone;
+                row.Cells["Title"].Value = employee.title.name;
                 this.employeeModel = new Employee();
                 this.renderModel();
             }

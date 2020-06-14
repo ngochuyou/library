@@ -4,7 +4,7 @@ using library.application.service.services;
 using System;
 using System.Windows.Forms;
 using System.Linq;
-using System.Windows.Forms.VisualStyles;
+using System.ComponentModel;
 
 namespace library.application.forms {
     public partial class BookForm: Form {
@@ -27,7 +27,13 @@ namespace library.application.forms {
         }
 
         private void renderBookSet() {
-            this.bookSet.DataSource = dao.getList<Book>(type);
+            BindingList<Book> list = new BindingList<Book>();
+
+            foreach(Book book in dao.getList<Book>(typeof(Book))) {
+                list.Add(book);
+            }
+
+            this.bookSet.DataSource = list;
         }
 
         private void renderModel() {
@@ -149,7 +155,15 @@ namespace library.application.forms {
             DatabaseOperationResult dbResult = dao.update(this.bookModel, type);
 
             if (dbResult.isOk()) {
-                this.bookSet.DataSource = dao.getList<Book>(type);
+                DataGridViewRow row = this.bookSet.CurrentRow;
+
+                row.Cells["ID"].Value = this.bookModel.id;
+                row.Cells["Name"].Value = this.bookModel.name;
+                row.Cells["Author"].Value = this.bookModel.author;
+                row.Cells["Publisher"].Value = this.bookModel.publisher;
+                row.Cells["Published date"].Value = this.bookModel.publishDate;
+                row.Cells["Price"].Value = this.bookModel.price;
+                row.Cells["Stocked date"].Value = this.bookModel.stockedDate;
                 this.bookModel = new Book();
                 this.bookModel.price = 1;
                 this.renderModel();
@@ -160,7 +174,10 @@ namespace library.application.forms {
             DatabaseOperationResult dbResult = dao.delete(this.bookModel, type);
 
             if (dbResult.isOk()) {
-                this.bookSet.DataSource = dao.getList<Book>(type);
+                BindingList<Book> list = (BindingList<Book>) this.bookSet.DataSource;
+
+                list.Remove(this.bookSet.CurrentRow.DataBoundItem as Book);
+                this.bookSet.DataSource = list;
                 this.bookModel = new Book();
                 this.bookModel.price = 1;
                 this.renderModel();
@@ -186,20 +203,21 @@ namespace library.application.forms {
                 .initialize(this.bookModel).model, type);
 
             if (dbResult.isOk()) {
-                this.bookSet.DataSource = dao.getList<Book>(type);
+                BindingList<Book> list = (BindingList<Book>) this.bookSet.DataSource;
+
+                list.Add(this.bookModel);
+                this.bookSet.DataSource = list;
                 this.bookModel = new Book();
                 this.renderModel();
             }
         }
 
         private void bookSet_SelectionChanged(object sender, EventArgs e) {
-            DataGridViewSelectedRowCollection selectedRows = this.bookSet.SelectedRows;
-
-            if (selectedRows.Count > 0) {
-                this.bookModel = dao.getList<Book>(type)
-                    .ElementAt(selectedRows[0].Index);
+            if (this.bookSet.SelectedRows.Count > 0) {
+                this.bookModel = this.bookSet.CurrentRow.DataBoundItem as Book;
                 this.renderModel();
             }
         }
     }
+
 }
